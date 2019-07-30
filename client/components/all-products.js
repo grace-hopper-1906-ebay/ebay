@@ -1,7 +1,7 @@
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
-// import SingleProduct from './SingleProduct'
-import {getProducts} from '../reducers/productsReducer'
+import SingleProduct from './single-product'
+import {getProducts} from '../store/all-products'
 
 class AllProducts extends Component {
   componentDidMount() {
@@ -9,7 +9,6 @@ class AllProducts extends Component {
   }
 
   render() {
-    // make sure products belongs to this.props and matches the name
     const {products} = this.props.products
     return (
       <div>
@@ -33,4 +32,3 @@ const mapDispatchToProps = dispatch => {
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(AllProducts)
-// export default AllProductsConnect

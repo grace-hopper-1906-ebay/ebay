@@ -19,8 +19,7 @@ export const getProducts = () => {
 }
 
 const initialState = {
-  products: [],
-  product: {}
+  products: []
 }
 
 export default function(state = initialState, action) {
