@@ -1,5 +1,7 @@
 body {
   font-family: sans-serif;
+  height: 100vh;
+  width: 100vw;
 }
 
 a {
@@ -18,4 +20,33 @@ nav a {
 form div {
   margin: 1em;
   display: inline-block;
+}
+
+.home-container {
+  height: 100vh;
+}
+
+.main-container {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+}
+
+#nav {
+  flex-grow: 1;
+  height: 8vh;
+}
+
+#footer {
+  flex-grow: 1;
+  justify-items: flex-end;
+}
+
+#main-body {
+  flex-grow: 8;
+}
+
+.nav-container {
+  display: flex;
+  justify-content: space-between;
 }
