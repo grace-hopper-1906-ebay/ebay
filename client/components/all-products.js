@@ -1,6 +1,6 @@
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
-import SingleProduct from './single-product'
+import {Link} from 'react-router-dom'
 import {getProducts} from '../store/all-products'
 
 class AllProducts extends Component {
@@ -9,12 +9,14 @@ class AllProducts extends Component {
   }
 
   render() {
-    const {products} = this.props.products
+    const products = this.props.products
     return (
       <div>
         <p>Wands</p>
         {products.map(product => (
-          <SingleProduct key={product.id} product={product} />
+          <Link to={`single-product/${product.id}`} key={product.id}>
+            {product.name}
+          </Link>
         ))}
       </div>
     )
@@ -23,7 +25,7 @@ class AllProducts extends Component {
 
 const mapStateToProps = state => {
   return {
-    products: state.products
+    products: state.allProducts.products
   }
 }
 
