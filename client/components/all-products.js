@@ -10,18 +10,16 @@ class AllProducts extends Component {
 
   render() {
     const products = this.props.products
-    if (products) {
-      return (
-        <div>
-          <p>Wands</p>
-          {products.map(product => (
-            <Link to={`single-product/${product.id}`} key={product.id}>
-              {product.name}
-            </Link>
-          ))}
-        </div>
-      )
-    } else return <div>no products</div>
+    return (
+      <div>
+        <p>Wands</p>
+        {products.map(product => (
+          <Link to={`single-product/${product.id}`} key={product.id}>
+            {product.name}
+          </Link>
+        ))}
+      </div>
+    )
   }
 }
 
