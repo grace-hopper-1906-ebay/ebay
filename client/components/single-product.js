@@ -1,6 +1,5 @@
 import React from 'react'
 import {connect} from 'react-redux'
-import PropTypes from 'prop-types'
 import {fetchSingleProduct} from '../store/single-product'
 
 /**
@@ -8,7 +7,7 @@ import {fetchSingleProduct} from '../store/single-product'
  */
 class SingleProduct extends React.Component {
   componentDidMount() {
-    this.props.fetchSingleProduct(this.props.match.params.id)
+    this.props.fetchSingleProduct(this.props.match.params.productId)
   }
 
   render() {
@@ -33,10 +32,10 @@ class SingleProduct extends React.Component {
  */
 const mapState = state => {
   return {
-    name: state.singleProduct.name,
-    price: state.singleProduct.price,
-    description: state.singleProduct.description,
-    image: state.singleProduct.image
+    name: state.singleProduct.product.name,
+    price: state.singleProduct.product.price,
+    description: state.singleProduct.product.description,
+    image: state.singleProduct.product.image
   }
 }
 
@@ -47,13 +46,3 @@ const mapDispatch = dispatch => {
 }
 
 export default connect(mapState, mapDispatch)(SingleProduct)
-
-/**
- * PROP TYPES
- */
-SingleProduct.propTypes = {
-  name: PropTypes.string,
-  price: PropTypes.number,
-  description: PropTypes.string,
-  image: PropTypes.string
-}

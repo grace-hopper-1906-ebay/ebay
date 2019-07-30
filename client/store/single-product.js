@@ -8,7 +8,9 @@ const GET_SINGLE_PRODUCT = 'GET_SINGLE_PRODUCT'
 /**
  * INITIAL STATE
  */
-const singleProduct = {}
+const singleProduct = {
+  product: {}
+}
 
 /**
  * ACTION CREATORS
@@ -34,7 +36,7 @@ export const fetchSingleProduct = productId => async dispatch => {
 export default function(state = singleProduct, action) {
   switch (action.type) {
     case GET_SINGLE_PRODUCT:
-      return action.product
+      return {...state, product: action.product}
     default:
       return state
   }

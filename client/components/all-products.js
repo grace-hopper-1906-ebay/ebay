@@ -1,6 +1,6 @@
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
-import SingleProduct from './single-product'
+import {Link} from 'react-router-dom'
 import {getProducts} from '../store/all-products'
 
 class AllProducts extends Component {
@@ -9,21 +9,25 @@ class AllProducts extends Component {
   }
 
   render() {
-    const {products} = this.props.products
-    return (
-      <div>
-        <p>Wands</p>
-        {products.map(product => (
-          <SingleProduct key={product.id} product={product} />
-        ))}
-      </div>
-    )
+    const products = this.props.products
+    if (products) {
+      return (
+        <div>
+          <p>Wands</p>
+          {products.map(product => (
+            <Link to={`single-product/${product.id}`} key={product.id}>
+              {product.name}
+            </Link>
+          ))}
+        </div>
+      )
+    } else return <div>no products</div>
   }
 }
 
 const mapStateToProps = state => {
   return {
-    products: state.products
+    products: state.allProducts.products
   }
 }
 
