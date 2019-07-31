@@ -19,9 +19,11 @@ class Cart extends Component {
 
   render() {
     const cart = this.props.cart
+    console.log(cart)
     const cartItems = Object.keys(cart).map(item =>
       this.matchingItems(item, this.props.products)
     )
+    console.log(cart)
     return (
       <div>
         <p>Cart!!</p>

@@ -10,7 +10,6 @@ class AllProducts extends Component {
 
   render() {
     const products = this.props.products
-    console.log(this.props)
     return (
       <div>
         <p>Wands</p>

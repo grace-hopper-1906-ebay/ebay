@@ -11,7 +11,7 @@ class SingleProduct extends React.Component {
   }
 
   addToCart = () => {
-    this.props.addProductToCart(this.props.match.params.productId)
+    this.props.addProductToCart({id: this.props.match.params.productId})
   }
 
   render() {
