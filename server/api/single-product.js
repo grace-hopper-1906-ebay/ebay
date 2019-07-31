@@ -16,21 +16,17 @@ router.put('/:id', async (req, res, next) => {
     const userData = req.session.passport
       ? req.session.passport.user
       : undefined
-    console.log(userData)
     if (userData) {
       const curUser = await User.findByPk(userData)
       let cart = [...curUser.cart]
       cart.push(req.params.id)
       const updatedCart = await curUser.update({cart: cart})
-      console.log(req.session)
       res.json(updatedCart)
     } else {
-      console.log('not logged in')
       let cart = [...req.session.cart]
       cart.push(req.params.id)
       req.session.cart = cart
-      console.log(req.session)
-      res.json('done?')
+      res.json(req.session.cart)
     }
   } catch (err) {
     next(err)
