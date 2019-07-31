@@ -9,7 +9,11 @@ async function seed() {
   //users
   const users = await Promise.all([
     User.create({email: 'cody@email.com', password: '123'}),
-    User.create({email: 'murphy@email.com', password: '123'})
+    User.create({email: 'chosen1@wizmail.com', password: '123'}),
+    User.create({email: 'darkLord@wizmail.com', password: '123'}),
+    User.create({email: 'weasleyisourking@wizmail.com', password: '123'}),
+    User.create({email: 'fredandgeorge@wizmail.com', password: '321'}),
+    User.create({email: 'padfoot@wizmail.com', password: '123'})
   ])
   console.log(`seeded ${users.length} users`)
 
@@ -65,7 +69,7 @@ async function seed() {
       image: 'https://bit.ly/2SSqpRj'
     }),
     Product.create({
-      name: 'Cypres Wand',
+      name: 'Cypress Wand',
       price: 60.0,
       description: 'Size: 10 1/4 inches\nWood: Cypres\nCore: Unicorn Hair',
       image: 'https://bit.ly/2OvD0LQ'
