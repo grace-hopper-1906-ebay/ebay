@@ -42,13 +42,6 @@ User.prototype.correctPassword = function(candidatePwd) {
   return User.encryptPassword(candidatePwd, this.salt()) === this.password()
 }
 
-User.prototype.addToCart = function(item) {
-  let cart = [...this.cart]
-  cart.push(item.id)
-  this.cart = cart
-  return this
-}
-
 /**
  * classMethods
  */
