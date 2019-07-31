@@ -1,6 +1,6 @@
 import React from 'react'
 import {connect} from 'react-redux'
-import {fetchSingleProduct, addProductToCart} from '../store/single-product'
+import {fetchSingleProduct, addProductToCart} from '../store'
 
 /**
  * COMPONENT
@@ -15,7 +15,6 @@ class SingleProduct extends React.Component {
   }
 
   render() {
-    console.log('we wanna see this.props', this.props)
     return (
       <div>
         <div>

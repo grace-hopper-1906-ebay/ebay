@@ -5,39 +5,34 @@ import {deleteFromCart, getCart, getProducts} from '../store'
 
 class Cart extends Component {
   componentDidMount() {
-    this.props.getProducts()
     this.props.getCart()
+    this.props.getProducts()
   }
 
-  // matchCartToproducts(object){
-  //     // let itemInCart = [];
-  //     // for( let key in object){
-  //     //     itemInCart.push(this.props.products[key-1])
-  //     // }
-  // }
-
-  matchingItems(key) {
-    for (let product in this.props.products) {
-      if (this.props.products[product].id === key) {
-        return this.props[product]
+  matchingItems(key, products) {
+    for (let product in products) {
+      if (String(products[product].id) === key) {
+        return products[product]
       }
     }
   }
 
   render() {
     const cart = this.props.cart
-    const cartItems = cart.map(item => this.matchingItems(item))
+    const cartItems = Object.keys(cart).map(item =>
+      this.matchingItems(item, this.props.products)
+    )
     return (
       <div>
-        <p>Do we see that page?</p>
+        <p>Cart!!</p>
 
         {cartItems.map(item => (
-          <div>
+          <div key={item.id}>
             <img src={item.image} />
             <p>{item.name}</p>
             <p>{item.desciption}</p>
             <p>{item.price}</p>
-            <button onClick={() => this.deleteFromCart(item.id)}>
+            <button onClick={() => this.props.deleteFromCart(item.id)}>
               Delete from cart
             </button>
           </div>
@@ -49,15 +44,15 @@ class Cart extends Component {
 
 const mapStateToProps = state => {
   return {
-    cart: cart,
-    products: products
+    cart: state.cart.cart,
+    products: state.allProducts.products
   }
 }
 
 const mapDispatchToProps = dispatch => {
   return {
     getCart: () => dispatch(getCart()),
-    deleteFromCart: () => dispatch(deleteFromCart(item.id)),
+    deleteFromCart: id => dispatch(deleteFromCart({id: id})),
     getProducts: () => dispatch(getProducts())
   }
 }
