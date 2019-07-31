@@ -16,6 +16,10 @@ const User = db.define('user', {
       return () => this.getDataValue('password')
     }
   },
+  cart: {
+    type: Sequelize.ARRAY(Sequelize.INTEGER),
+    defaultValue: []
+  },
   salt: {
     type: Sequelize.STRING,
     // Making `.salt` act like a function hides it when serializing to JSON.
@@ -36,6 +40,13 @@ module.exports = User
  */
 User.prototype.correctPassword = function(candidatePwd) {
   return User.encryptPassword(candidatePwd, this.salt()) === this.password()
+}
+
+User.prototype.addToCart = function(item) {
+  let cart = [...this.cart]
+  cart.push(item.id)
+  this.cart = cart
+  return this
 }
 
 /**

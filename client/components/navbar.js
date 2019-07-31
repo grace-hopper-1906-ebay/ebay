@@ -8,7 +8,7 @@ const Navbar = ({handleClick, isLoggedIn}) => (
   <nav className="navbar navbar-fixed-top">
     <div className="container-fluid">
       <div className="navbar-header">
-        <Link class="navbar-brand" to="/">
+        <Link className="navbar-brand" to="/">
           WebSiteName
         </Link>
       </div>
