@@ -13,7 +13,12 @@ const Navbar = ({handleClick, isLoggedIn}) => (
         </Link>
       </div>
       <div>
-        <Link to="/cart">Cart</Link>
+        <Link to="/cart">
+          <img src="https://t3.ftcdn.net/jpg/01/28/03/88/160_F_128038885_VcHWsuiAblK57vjzUcDAuJsSfkcJWdTs.jpg" />
+        </Link>
+      </div>
+      <div>
+        <Link to="/products">Wands</Link>
       </div>
       {isLoggedIn ? (
         <ul className="nav navbar-nav">
