@@ -7,7 +7,6 @@ router.get('/', async (req, res, next) => {
   try {
     const user = req.session.passport ? req.session.passport.user : undefined
     if (user) {
-      console.log('hi logged in')
       const curUser = await User.findByPk(user)
       const cart = [...curUser.cart]
       //{product:quantity}
@@ -21,7 +20,6 @@ router.get('/', async (req, res, next) => {
       }
       res.json(quantityCart)
     } else {
-      console.log('guest')
       let cart = [...req.session.cart]
       let quantityCart = {}
       for (let i = 0; i < cart.length; i++) {
@@ -39,13 +37,12 @@ router.get('/', async (req, res, next) => {
 })
 
 //removing item from cart
-router.put('/', async (req, res, next) => {
+router.put('/delete', async (req, res, next) => {
   try {
     const user = req.session.passport ? req.session.passport.user : undefined
     if (user) {
       const curUser = await User.findByPk(user)
       let cart = [...curUser.cart]
-      console.log(req.body)
       const item = req.body.id
       cart.splice(cart.indexOf(item), 1)
       const updatedCart = await curUser.update({cart: cart})
@@ -54,6 +51,29 @@ router.put('/', async (req, res, next) => {
       let cart = [...req.session.cart]
       const item = req.body.id
       cart.splice(cart.indexOf(item), 1)
+      req.session.cart = cart
+      res.json(req.session.cart)
+    }
+  } catch (err) {
+    next(err)
+  }
+})
+
+//add to cart
+router.put('/add', async (req, res, next) => {
+  try {
+    const userData = req.session.passport
+      ? req.session.passport.user
+      : undefined
+    if (userData) {
+      const curUser = await User.findByPk(userData)
+      let cart = [...curUser.cart]
+      cart.push(req.body.id)
+      const updatedCart = await curUser.update({cart: cart})
+      res.json(updatedCart)
+    } else {
+      let cart = [...req.session.cart]
+      cart.push(req.body.id)
       req.session.cart = cart
       res.json(req.session.cart)
     }
