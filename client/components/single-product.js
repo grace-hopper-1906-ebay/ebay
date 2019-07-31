@@ -1,6 +1,6 @@
 import React from 'react'
 import {connect} from 'react-redux'
-import {fetchSingleProduct} from '../store/single-product'
+import {fetchSingleProduct, addProductToCart} from '../store/single-product'
 
 /**
  * COMPONENT
@@ -8,6 +8,10 @@ import {fetchSingleProduct} from '../store/single-product'
 class SingleProduct extends React.Component {
   componentDidMount() {
     this.props.fetchSingleProduct(this.props.match.params.productId)
+  }
+
+  addToCart = () => {
+    this.props.addProductToCart(this.props.match.params.productId)
   }
 
   render() {
@@ -20,7 +24,7 @@ class SingleProduct extends React.Component {
           <h3>{this.props.name}</h3>
           <p>{this.props.description}</p>
           <p>${this.props.price}</p>
-          <button>Add To Cart</button>
+          <button onClick={this.addToCart}>Add To Cart</button>
         </div>
       </div>
     )
@@ -35,13 +39,15 @@ const mapState = state => {
     name: state.singleProduct.product.name,
     price: state.singleProduct.product.price,
     description: state.singleProduct.product.description,
-    image: state.singleProduct.product.image
+    image: state.singleProduct.product.image,
+    isLoggedIn: !!state.user.id
   }
 }
 
 const mapDispatch = dispatch => {
   return {
-    fetchSingleProduct: productId => dispatch(fetchSingleProduct(productId))
+    fetchSingleProduct: productId => dispatch(fetchSingleProduct(productId)),
+    addProductToCart: productId => dispatch(addProductToCart(productId))
   }
 }
 

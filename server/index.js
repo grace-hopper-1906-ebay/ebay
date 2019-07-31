@@ -63,6 +63,13 @@ const createApp = () => {
   app.use(passport.initialize())
   app.use(passport.session())
 
+  // place right after the session setup middleware
+  app.use((req, res, next) => {
+    // console.log('SESSION: ', req.session)
+    if (!req.session.cart) req.session.cart = []
+    next()
+  })
+
   // auth and api routes
   app.use('/auth', require('./auth'))
   app.use('/api', require('./api'))
