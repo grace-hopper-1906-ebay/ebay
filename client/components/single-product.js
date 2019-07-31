@@ -15,6 +15,7 @@ class SingleProduct extends React.Component {
   }
 
   render() {
+    console.log('we wanna see this.props', this.props)
     return (
       <div>
         <div>
