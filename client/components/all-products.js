@@ -14,9 +14,12 @@ class AllProducts extends Component {
       <div>
         <p>Wands</p>
         {products.map(product => (
-          <Link to={`single-product/${product.id}`} key={product.id}>
-            {product.name}
-          </Link>
+          <div key={product.id}>
+            <img src={product.image} />
+            <Link to={`single-product/${product.id}`} key={product.id}>
+              {product.name}
+            </Link>
+          </div>
         ))}
       </div>
     )

@@ -8,8 +8,9 @@ const Navbar = ({handleClick, isLoggedIn}) => (
   <nav className="navbar navbar-fixed-top">
     <div className="container-fluid">
       <div className="navbar-header">
+        <img src="/Users/rir/Documents/Grace-Hopper/ebay/public/phoenix.jpg" />
         <Link className="navbar-brand" to="/">
-          WebSiteName
+          Helios Wands
         </Link>
       </div>
       <div>
