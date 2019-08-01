@@ -9,7 +9,7 @@ router.get('/', async (req, res, next) => {
     if (user) {
       const cart = await Cart.findAll({
         include: [Product],
-        where: {userId: user}
+        where: {userId: user, orderNumber: null}
       })
       res.json(cart)
     } else {
@@ -28,11 +28,15 @@ router.delete('/delete/:id', async (req, res, next) => {
     const user = req.session.passport ? req.session.passport.user : undefined
     if (user) {
       await Cart.destroy({
-        where: {productId: parseInt(req.params.id), userId: user}
+        where: {
+          productId: parseInt(req.params.id),
+          userId: user,
+          orderNumber: null
+        }
       })
       const cart = await Cart.findAll({
         include: [Product],
-        where: {userId: user}
+        where: {userId: user, orderNumber: null}
       })
       res.json(cart)
     } else {
@@ -53,13 +57,54 @@ router.post('/add', async (req, res, next) => {
   try {
     const user = req.session.passport ? req.session.passport.user : undefined
     if (user) {
+      const cart = await Cart.findAll({
+        include: [Product],
+        where: {userId: user, orderNumber: null}
+      })
+      //check if item is already in user's cart
+      for (let i = 0; i < cart.length; i++) {
+        if (cart[i].productId === parseInt(req.body.id)) {
+          //in cart
+          let quant = cart[i].quantity
+          quant++
+          await Cart.update(
+            {quantity: quant},
+            {
+              where: {
+                userId: user,
+                orderNumber: null,
+                productId: parseInt(req.body.id)
+              }
+            }
+          )
+          const data = await Cart.findAll({
+            include: [Product],
+            where: {userId: user, orderNumber: null}
+          })
+          res.json(data)
+          return
+        }
+      }
       const newCartItem = {userId: user, productId: parseInt(req.body.id)}
-      const addToCart = await Cart.create(newCartItem)
-      res.json(addToCart)
+      await Cart.create(newCartItem)
+      const data = await Cart.findAll({
+        include: [Product],
+        where: {userId: user, orderNumber: null}
+      })
+      res.json(data)
     } else {
       let cart = [...req.session.cart]
+      for (let i = 0; i < cart.length; i++) {
+        console.log('single cart item', cart[i])
+        if (cart[i].product.id === parseInt(req.body.id)) {
+          cart[i].quantity++
+          req.session.cart = cart
+          res.json(req.session.cart)
+          return
+        }
+      }
       const product = await Product.findByPk(req.body.id)
-      cart.push({product: product})
+      cart.push({quantity: 1, product: product})
       req.session.cart = cart
       res.json(req.session.cart)
     }
@@ -69,18 +114,33 @@ router.post('/add', async (req, res, next) => {
   }
 })
 
-//removing item from cart after placing order
+//after placing order, give products in cart order number
 router.put('/place-order', async (req, res, next) => {
   try {
     const user = req.session.passport ? req.session.passport.user : undefined
     if (user) {
-      const curUser = await User.findByPk(user)
-      let cart = []
-      const updatedCart = await curUser.update({cart: cart})
-      res.json(updatedCart)
+      const orderNum = Math.floor(user * Math.random() * 10000000)
+      await Cart.update(
+        {orderNumber: orderNum},
+        {where: {userId: user, orderNumber: null}}
+      )
+      const cart = await Cart.findAll({
+        include: [Product],
+        where: {userId: user, orderNumber: null}
+      })
+      res.json(cart)
     } else {
-      let cart = []
-      req.session.cart = cart
+      const cart = [...req.session.cart]
+      const orderNum = Math.floor(Math.random() * 10000000)
+      cart.forEach(async item => {
+        const orderedItem = {
+          orderNumber: orderNum,
+          productId: item.product.id,
+          quantity: item.quantity
+        }
+        await Cart.create(orderedItem)
+      })
+      req.session.cart = []
       res.json(req.session.cart)
     }
   } catch (err) {

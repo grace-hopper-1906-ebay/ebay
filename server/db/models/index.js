@@ -1,6 +1,5 @@
 const User = require('./user')
 const Product = require('./product')
-const Order = require('./order')
 const Cart = require('./cart')
 
 /**
@@ -10,10 +9,6 @@ const Cart = require('./cart')
  *    BlogPost.belongsTo(User)
  */
 
-Order.belongsTo(User)
-User.hasMany(Order)
-Order.belongsTo(Product)
-Product.hasMany(Order)
 Cart.belongsTo(User)
 User.hasMany(Cart)
 Cart.belongsTo(Product)
@@ -27,6 +22,5 @@ Product.hasMany(Cart)
 module.exports = {
   User,
   Product,
-  Order,
   Cart
 }

@@ -2,7 +2,7 @@ import React, {Component} from 'react'
 import {connect} from 'react-redux'
 import {Link} from 'react-router-dom'
 import {Redirect} from 'react-router'
-import {deleteFromCart, getCart, placingOrder} from '../store'
+import {deleteFromCart, getCart, placeOrder} from '../store'
 
 class Cart extends Component {
   componentDidMount() {
@@ -10,7 +10,7 @@ class Cart extends Component {
   }
 
   handleOrderPlacement = () => {
-    this.props.placingOrder()
+    this.props.placeOrder()
     this.props.history.push('/order-confirmation')
   }
 
@@ -27,7 +27,7 @@ class Cart extends Component {
             <img src={item.product.image} />
             <p>{item.product.name}</p>
             <p>{item.product.price}</p>
-            <p>{item.product.id}</p>
+            <p>quantity: {item.quantity}</p>
             <button onClick={() => this.props.deleteFromCart(item.product.id)}>
               Delete from cart
             </button>
@@ -42,8 +42,7 @@ class Cart extends Component {
 const mapStateToProps = state => {
   console.log(state)
   return {
-    cart: state.cart.cart,
-    orderNumber: state.placeOrder.order.number
+    cart: state.cart.cart
   }
 }
 
@@ -51,7 +50,7 @@ const mapDispatchToProps = dispatch => {
   return {
     getCart: () => dispatch(getCart()),
     deleteFromCart: id => dispatch(deleteFromCart({id: id})),
-    placingOrder: () => dispatch(placingOrder())
+    placeOrder: () => dispatch(placeOrder())
   }
 }
 
