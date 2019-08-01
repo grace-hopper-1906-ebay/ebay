@@ -63,7 +63,7 @@ const createApp = () => {
   app.use(passport.initialize())
   app.use(passport.session())
 
-  // create cart on cookie for guest
+  // create cart on session for guest
   app.use((req, res, next) => {
     if (!req.session.cart) req.session.cart = []
     next()
