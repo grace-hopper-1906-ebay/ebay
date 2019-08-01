@@ -11,7 +11,7 @@ const ADD_TO_CART = 'ADD_TO_CART'
  * INITIAL STATE
  */
 const cart = {
-  cart: {}
+  cart: []
 }
 
 /**
@@ -36,8 +36,7 @@ export const getCart = () => async dispatch => {
 
 export const deleteFromCart = id => async dispatch => {
   try {
-    await axios.put(`/api/cart/delete`, id)
-    const {data} = await axios.get(`/api/cart`)
+    const {data} = await axios.delete(`/api/cart/delete/${id.id}`)
     dispatch(deletedFromCart(data))
   } catch (err) {
     console.error(err)
@@ -46,8 +45,7 @@ export const deleteFromCart = id => async dispatch => {
 
 export const addProductToCart = id => async dispatch => {
   try {
-    await axios.put(`/api/cart/add`, id)
-    const {data} = await axios.get(`/api/cart`)
+    const {data} = await axios.post(`/api/cart/add`, id)
     dispatch(addToCart(data))
   } catch (err) {
     console.error(err)

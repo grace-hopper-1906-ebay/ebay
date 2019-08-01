@@ -1,5 +1,5 @@
 const router = require('express').Router()
-const {User} = require('../db/models')
+const {User, Cart, Product} = require('../db/models')
 module.exports = router
 
 //getting cart data
@@ -7,29 +7,14 @@ router.get('/', async (req, res, next) => {
   try {
     const user = req.session.passport ? req.session.passport.user : undefined
     if (user) {
-      const curUser = await User.findByPk(user)
-      const cart = [...curUser.cart]
-      //{product:quantity}
-      let quantityCart = {}
-      for (let i = 0; i < cart.length; i++) {
-        if (Object.keys(quantityCart).includes(String(cart[i]))) {
-          quantityCart[cart[i]]++
-        } else {
-          quantityCart[cart[i]] = 1
-        }
-      }
-      res.json(quantityCart)
+      const cart = await Cart.findAll({
+        include: [Product],
+        where: {userId: user}
+      })
+      res.json(cart)
     } else {
       let cart = [...req.session.cart]
-      let quantityCart = {}
-      for (let i = 0; i < cart.length; i++) {
-        if (Object.keys(quantityCart).includes(cart[i])) {
-          quantityCart[cart[i]]++
-        } else {
-          quantityCart[cart[i]] = 1
-        }
-      }
-      res.json(quantityCart)
+      res.json(cart)
     }
   } catch (error) {
     next(error)
@@ -37,21 +22,25 @@ router.get('/', async (req, res, next) => {
 })
 
 //removing item from cart
-router.put('/delete', async (req, res, next) => {
+router.delete('/delete/:id', async (req, res, next) => {
   try {
+    parseInt(req.params.id)
     const user = req.session.passport ? req.session.passport.user : undefined
     if (user) {
-      const curUser = await User.findByPk(user)
-      let cart = [...curUser.cart]
-      const item = req.body.id
-      cart.splice(cart.indexOf(item), 1)
-      const updatedCart = await curUser.update({cart: cart})
-      res.json(updatedCart)
+      await Cart.destroy({
+        where: {productId: parseInt(req.params.id), userId: user}
+      })
+      const cart = await Cart.findAll({
+        include: [Product],
+        where: {userId: user}
+      })
+      res.json(cart)
     } else {
       let cart = [...req.session.cart]
-      const item = req.body.id
-      cart.splice(cart.indexOf(item), 1)
-      req.session.cart = cart
+      const filtered = cart.filter(
+        item => item.product.id !== parseInt(req.params.id)
+      )
+      req.session.cart = filtered
       res.json(req.session.cart)
     }
   } catch (err) {
@@ -60,24 +49,22 @@ router.put('/delete', async (req, res, next) => {
 })
 
 //add to cart
-router.put('/add', async (req, res, next) => {
+router.post('/add', async (req, res, next) => {
   try {
-    const userData = req.session.passport
-      ? req.session.passport.user
-      : undefined
-    if (userData) {
-      const curUser = await User.findByPk(userData)
-      let cart = [...curUser.cart]
-      cart.push(req.body.id)
-      const updatedCart = await curUser.update({cart: cart})
-      res.json(updatedCart)
+    const user = req.session.passport ? req.session.passport.user : undefined
+    if (user) {
+      const newCartItem = {userId: user, productId: parseInt(req.body.id)}
+      const addToCart = await Cart.create(newCartItem)
+      res.json(addToCart)
     } else {
       let cart = [...req.session.cart]
-      cart.push(req.body.id)
+      const product = await Product.findByPk(req.body.id)
+      cart.push({product: product})
       req.session.cart = cart
       res.json(req.session.cart)
     }
   } catch (err) {
+    console.log('error')
     next(err)
   }
 })
