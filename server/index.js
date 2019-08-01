@@ -63,9 +63,8 @@ const createApp = () => {
   app.use(passport.initialize())
   app.use(passport.session())
 
-  // place right after the session setup middleware
+  // create cart on cookie for guest
   app.use((req, res, next) => {
-    // console.log('SESSION: ', req.session)
     if (!req.session.cart) req.session.cart = []
     next()
   })

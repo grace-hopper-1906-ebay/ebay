@@ -13,7 +13,9 @@ router.get('/', async (req, res, next) => {
       })
       res.json(cart)
     } else {
+      console.log(req.session.cookie)
       let cart = [...req.session.cart]
+      console.log(cart)
       res.json(cart)
     }
   } catch (error) {
@@ -59,8 +61,10 @@ router.post('/add', async (req, res, next) => {
     } else {
       let cart = [...req.session.cart]
       const product = await Product.findByPk(req.body.id)
+      console.log('before adding', req.session.cart)
       cart.push({product: product})
       req.session.cart = cart
+      console.log('after adding', req.session.cart)
       res.json(req.session.cart)
     }
   } catch (err) {
