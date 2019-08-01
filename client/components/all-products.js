@@ -2,6 +2,7 @@ import React, {Component} from 'react'
 import {connect} from 'react-redux'
 import {Link} from 'react-router-dom'
 import {getProducts} from '../store'
+import {Row, Col} from 'react-bootstrap'
 
 class AllProducts extends Component {
   componentDidMount() {
@@ -12,15 +13,19 @@ class AllProducts extends Component {
     const products = this.props.products
     return (
       <div>
-        <p>Wands</p>
-        {products.map(product => (
-          <div key={product.id}>
-            <img src={product.image} />
-            <Link to={`single-product/${product.id}`} key={product.id}>
-              {product.name}
-            </Link>
-          </div>
-        ))}
+        <Row>
+          <Col>Wands</Col>
+        </Row>
+        <Row>
+          {products.map(product => (
+            <Col sm={4} key={product.id}>
+              <img src={product.image} />
+              <Link to={`single-product/${product.id}`} key={product.id}>
+                {product.name}
+              </Link>
+            </Col>
+          ))}
+        </Row>
       </div>
     )
   }

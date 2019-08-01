@@ -1,8 +1,9 @@
 import React from 'react'
 
 const Footer = () => (
-  <footer className="page-footer text-center font-small blue pt-4 bg-primary">
+  <footer id="footer">
     <p>Images from Harry Potter Wiki Fandom</p>
+    <p>Terms and Conditions</p>
   </footer>
   // // <!-- Footer -->
   // <footer class="page-footer font-small blue bg-primary">
