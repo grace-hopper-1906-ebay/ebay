@@ -1,7 +1,8 @@
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
 import {Link} from 'react-router-dom'
-import {deleteFromCart, getCart, getProducts} from '../store'
+import {Redirect} from 'react-router'
+import {deleteFromCart, getCart, getProducts, placingOrder} from '../store'
 
 class Cart extends Component {
   componentDidMount() {
@@ -15,6 +16,11 @@ class Cart extends Component {
         return products[product]
       }
     }
+  }
+
+  handleOrderPlacement = () => {
+    this.props.placingOrder()
+    this.props.history.push('/order-confirmation')
   }
 
   render() {
@@ -37,6 +43,7 @@ class Cart extends Component {
             </button>
           </div>
         ))}
+        <button onClick={this.handleOrderPlacement}>Place Order!!</button>
       </div>
     )
   }
@@ -45,7 +52,8 @@ class Cart extends Component {
 const mapStateToProps = state => {
   return {
     cart: state.cart.cart,
-    products: state.allProducts.products
+    products: state.allProducts.products,
+    orderNumber: state.placeOrder.order.number
   }
 }
 
@@ -53,7 +61,8 @@ const mapDispatchToProps = dispatch => {
   return {
     getCart: () => dispatch(getCart()),
     deleteFromCart: id => dispatch(deleteFromCart({id: id})),
-    getProducts: () => dispatch(getProducts())
+    getProducts: () => dispatch(getProducts()),
+    placingOrder: () => dispatch(placingOrder())
   }
 }
 

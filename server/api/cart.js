@@ -81,3 +81,22 @@ router.put('/add', async (req, res, next) => {
     next(err)
   }
 })
+
+//removing item from cart after placing order
+router.put('/place-order', async (req, res, next) => {
+  try {
+    const user = req.session.passport ? req.session.passport.user : undefined
+    if (user) {
+      const curUser = await User.findByPk(user)
+      let cart = []
+      const updatedCart = await curUser.update({cart: cart})
+      res.json(updatedCart)
+    } else {
+      let cart = []
+      req.session.cart = cart
+      res.json(req.session.cart)
+    }
+  } catch (err) {
+    next(err)
+  }
+})
