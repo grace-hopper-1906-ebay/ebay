@@ -1,12 +1,9 @@
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
 import {Link} from 'react-router-dom'
-import {getOrderNumber} from '../store'
 
 class orderConfirmation extends Component {
-  componentDidMount() {
-    this.props.getOrderNumber()
-  }
+  componentDidMount() {}
   render() {
     return (
       <div>
@@ -18,15 +15,7 @@ class orderConfirmation extends Component {
 }
 
 const mapStateToProps = state => {
-  return {
-    orderNumber: state.orderConfirmation.order.orderNumber
-  }
+  return {orderNumber: state.cart.orderNumber}
 }
 
-const mapDispatchToProps = dispatch => {
-  return {
-    getOrderNumber: () => dispatch(getOrderNumber())
-  }
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(orderConfirmation)
+export default connect(mapStateToProps)(orderConfirmation)
