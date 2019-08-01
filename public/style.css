@@ -22,31 +22,36 @@ form div {
   display: inline-block;
 }
 
-.home-container {
-  height: 100vh;
-}
-
 .main-container {
   display: flex;
   flex-direction: column;
-  height: 100vh;
-}
-
-#nav {
-  flex-grow: 1;
-  height: 8vh;
 }
 
 #footer {
-  flex-grow: 1;
-  justify-items: flex-end;
+  position: static;
+  margin-bottom: 0;
+  bottom: 0;
+  width: 100%;
+  background-color: #e49f57;
+  display: flex;
+  justify-content: space-around;
+}
+
+#footer p {
+  text-align: left;
+  color: white;
+  padding: 15px;
+}
+
+#footer p:nth-child(2) {
+  text-align: right;
+  padding: 15px;
 }
 
 #main-body {
   flex-grow: 8;
 }
 
-.nav-container {
-  display: flex;
-  justify-content: space-between;
+.bg-fire {
+  background-color: #c88c7e;
 }
