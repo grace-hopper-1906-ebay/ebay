@@ -119,29 +119,29 @@ router.put('/place-order', async (req, res, next) => {
   try {
     const user = req.session.passport ? req.session.passport.user : undefined
     if (user) {
-      const orderNum = Math.floor(user * Math.random() * 10000000)
+      const orderNumber = Math.floor(user * Math.random() * 10000000)
       await Cart.update(
-        {orderNumber: orderNum},
+        {orderNumber: orderNumber},
         {where: {userId: user, orderNumber: null}}
       )
       const cart = await Cart.findAll({
         include: [Product],
         where: {userId: user, orderNumber: null}
       })
-      res.json(cart)
+      res.json({cart: cart, orderNumber})
     } else {
       const cart = [...req.session.cart]
-      const orderNum = Math.floor(Math.random() * 10000000)
+      const orderNumber = Math.floor(Math.random() * 10000000)
       cart.forEach(async item => {
         const orderedItem = {
-          orderNumber: orderNum,
+          orderNumber: orderNumber,
           productId: item.product.id,
           quantity: item.quantity
         }
         await Cart.create(orderedItem)
       })
       req.session.cart = []
-      res.json(req.session.cart)
+      res.json({cart: req.session.cart, orderNumber})
     }
   } catch (err) {
     next(err)

@@ -16,8 +16,6 @@ class Cart extends Component {
 
   render() {
     const cart = this.props.cart
-    console.log(cart)
-
     return (
       <div>
         <p>Cart!!</p>
@@ -40,9 +38,9 @@ class Cart extends Component {
 }
 
 const mapStateToProps = state => {
-  console.log(state)
   return {
-    cart: state.cart.cart
+    cart: state.cart.cart,
+    orderNumber: state.cart.orderNumber
   }
 }
 

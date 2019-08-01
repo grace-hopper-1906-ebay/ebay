@@ -12,7 +12,8 @@ const PLACE_ORDER = 'PLACE_ORDER'
  * INITIAL STATE
  */
 const cart = {
-  cart: []
+  cart: [],
+  orderNumber: null
 }
 
 /**
@@ -21,7 +22,7 @@ const cart = {
 const gotCart = cart => ({type: GET_CART, cart})
 const deletedFromCart = cart => ({type: DELETE_FROM_CART, cart})
 const addToCart = cart => ({type: ADD_TO_CART, cart})
-const placedOrder = cart => ({type: PLACE_ORDER, cart})
+const placedOrder = payload => ({type: PLACE_ORDER, payload})
 
 /**
  * THUNK CREATORS
@@ -75,7 +76,11 @@ export default function(state = cart, action) {
     case ADD_TO_CART:
       return {...state, cart: action.cart}
     case PLACE_ORDER:
-      return {...state, cart: action.cart}
+      return {
+        ...state,
+        cart: action.payload.cart,
+        orderNumber: action.payload.orderNumber
+      }
     default:
       return state
   }

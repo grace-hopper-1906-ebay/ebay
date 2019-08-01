@@ -8,18 +8,14 @@ class orderConfirmation extends Component {
     return (
       <div>
         <h3>Order Placed!!</h3>
-        <p>Order Number: {}</p>
+        <p>Order Number: {this.props.orderNumber}</p>
       </div>
     )
   }
 }
 
 const mapStateToProps = state => {
-  return {}
+  return {orderNumber: state.cart.orderNumber}
 }
 
-const mapDispatchToProps = dispatch => {
-  return {}
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(orderConfirmation)
+export default connect(mapStateToProps)(orderConfirmation)
