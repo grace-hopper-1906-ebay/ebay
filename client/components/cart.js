@@ -16,6 +16,13 @@ class Cart extends Component {
 
   render() {
     const cart = this.props.cart
+    let disablePlaceOrder
+    if (cart.length === 0) {
+      disablePlaceOrder = true
+    } else {
+      disablePlaceOrder = false
+    }
+    console.log(disablePlaceOrder)
     return (
       <div>
         <p>Cart!!</p>
@@ -31,7 +38,12 @@ class Cart extends Component {
             </button>
           </div>
         ))}
-        <button onClick={this.handleOrderPlacement}>Place Order!!</button>
+        <button
+          disabled={disablePlaceOrder}
+          onClick={this.handleOrderPlacement}
+        >
+          Place Order!!
+        </button>
       </div>
     )
   }
