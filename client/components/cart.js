@@ -16,7 +16,12 @@ class Cart extends Component {
 
   render() {
     const cart = this.props.cart
-    const disablePlaceOrder = cart.length === 0
+    let disablePlaceOrder
+    if (cart.length === 0) {
+      disablePlaceOrder = true
+    } else {
+      disablePlaceOrder = false
+    }
     console.log(disablePlaceOrder)
     return (
       <div>
