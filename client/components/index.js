@@ -6,7 +6,7 @@
 export {default as Navbar} from './navbar'
 export {default as Footer} from './footer'
 export {default as UserHome} from './user-home'
-export {default as Main} from './main'
+export {default as Main} from './Main'
 export {default as SingleProduct} from './single-product'
 export {default as AllProducts} from './all-products'
 export {default as Cart} from './cart'
