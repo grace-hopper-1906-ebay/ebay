@@ -15,14 +15,16 @@ install:
 before_script:
   - psql -c 'create database "ebay-test";' -U postgres # remember to change this name if you change it elsewhere (e.g. package.json)
 script:
-  - npm test             # test the code
+  - npm test # test the code
   - npm run build-client # make the bundle
-
-# before_deploy:
-#   - rm -rf node_modules # omit from the tarball, since we skip cleanup
-# deploy:
-#   skip_cleanup: true # prevents travis from deleting the build
-#   provider: heroku
-#   app: YOUR-HEROKU-APP-NAME-HERE # see README
-#   api_key:
-#     secure: YOUR-***ENCRYPTED***-API-KEY-HERE # see README
+before_deploy: # omit node_modules, since we set skip_cleanup below
+  - rm -rf node_modules
+deploy: # see README for details on these keys
+  # prevents travis from deleting the build
+  skip_cleanup: true
+  provider: heroku
+  # app should be your heroku app name; see README
+  app: graceshopper-helios
+  # the secure key indicates an encrypted value; see README
+  api_key:
+    secure: gypokbjRq8+02YEBgUCR+LnEcqD3R8kQQw0I84wTNvJLBcWqmlljJAvu1ALcxxXGZs1vrKLBnv3sw8hmtyx4TRu7ybRD4tK4FUNiQtd2+ZiZ3uKVKdkPzqph5hsbYwuxhz68rKlbbLtMaDCksrDMPcYUqw7sRgMZc0PNWkY1/O/AK7Drh1zt7WDE+QCaelHPMJxdAttsIG4aJZywh1St5Lw4QPVY0RzveD3ApPSb7E7NnwRMmPCIIpgvG1sgWP+pMYulBARUM0oHcof4hGlWIH3acj8YZljPPMIuDtAsOdwQlvby/DHKxSaFWxbOsG8t2E5DmElilP6aBjVZ3FNm4jf6T1GzrpaM3RbCNyaLDVfs7wyOxIX+HeOzOOT6hZJsgUKkYjdwfUFQZOfbfbrCI/F1/pwicg8kWWr5fvwV/aPtlhCe6usB1uQYBCZpU73Z9fvLauy2TwXuSFtxyDvKOoLoT1+tvKt4d9QSMPoa68WL9X30solDx6ZPpF0sAweVEKtPha0avJZGPQrgoVlxBFArTSAaa6yhJh0SQiaoWjnPyxFrvkEvI6rt1UOhDP0jeRsOcfXO3xYbOl8o5JIddBiOFSTqSj6x6ORsFEFOYM0Y2S97Bm+aWj3rJrS/tuWQ9aLYmdllDnY8jngseq3weU6VZkTFzKqUE+MSMjhNmpE=
