@@ -1,5 +1,5 @@
 const router = require('express').Router()
-const {User, Cart, Product} = require('../db/models')
+const {Order, Cart, Product} = require('../db/models')
 module.exports = router
 
 //getting cart data
@@ -9,7 +9,7 @@ router.get('/', async (req, res, next) => {
     if (user) {
       const cart = await Cart.findAll({
         include: [Product],
-        where: {userId: user, orderNumber: null}
+        where: {userId: user, orderId: null}
       })
       res.json(cart)
     } else {
@@ -24,28 +24,18 @@ router.get('/', async (req, res, next) => {
 //removing item from cart
 router.delete('/delete/:id', async (req, res, next) => {
   try {
-    parseInt(req.params.id)
     const user = req.session.passport ? req.session.passport.user : undefined
     if (user) {
       await Cart.destroy({
         where: {
           productId: parseInt(req.params.id),
           userId: user,
-          orderNumber: null
+          orderId: null
         }
       })
-      const cart = await Cart.findAll({
-        include: [Product],
-        where: {userId: user, orderNumber: null}
-      })
-      res.json(cart)
+      res.json({id: parseInt(req.params.id)})
     } else {
-      let cart = [...req.session.cart]
-      const filtered = cart.filter(
-        item => item.product.id !== parseInt(req.params.id)
-      )
-      req.session.cart = filtered
-      res.json(req.session.cart)
+      res.json({id: parseInt(req.params.id)})
     }
   } catch (err) {
     next(err)
@@ -59,7 +49,7 @@ router.post('/add', async (req, res, next) => {
     if (user) {
       const cart = await Cart.findAll({
         include: [Product],
-        where: {userId: user, orderNumber: null}
+        where: {userId: user, orderId: null}
       })
       //check if item is already in user's cart
       for (let i = 0; i < cart.length; i++) {
@@ -72,30 +62,37 @@ router.post('/add', async (req, res, next) => {
             {
               where: {
                 userId: user,
-                orderNumber: null,
+                orderId: null,
                 productId: parseInt(req.body.id)
               }
             }
           )
-          const data = await Cart.findAll({
+          const item = await Cart.findOne({
             include: [Product],
-            where: {userId: user, orderNumber: null}
+            where: {
+              userId: user,
+              orderId: null,
+              productId: parseInt(req.body.id)
+            }
           })
-          res.json(data)
+          res.json(item)
           return
         }
       }
       const newCartItem = {userId: user, productId: parseInt(req.body.id)}
       await Cart.create(newCartItem)
-      const data = await Cart.findAll({
+      const item = await Cart.findOne({
         include: [Product],
-        where: {userId: user, orderNumber: null}
+        where: {
+          userId: user,
+          orderId: null,
+          productId: parseInt(req.body.id)
+        }
       })
-      res.json(data)
+      res.json(item)
     } else {
       let cart = [...req.session.cart]
       for (let i = 0; i < cart.length; i++) {
-        console.log('single cart item', cart[i])
         if (cart[i].product.id === parseInt(req.body.id)) {
           cart[i].quantity++
           req.session.cart = cart
@@ -120,21 +117,19 @@ router.put('/place-order', async (req, res, next) => {
     const user = req.session.passport ? req.session.passport.user : undefined
     if (user) {
       const orderNumber = Math.floor(user * Math.random() * 10000000)
+      const order = await Order.create({orderNumber: orderNumber, userId: user})
       await Cart.update(
-        {orderNumber: orderNumber},
-        {where: {userId: user, orderNumber: null}}
+        {orderId: order.id},
+        {where: {userId: user, orderId: null}}
       )
-      const cart = await Cart.findAll({
-        include: [Product],
-        where: {userId: user, orderNumber: null}
-      })
-      res.json({cart: cart, orderNumber})
+      res.json({cart: [], orderNumber})
     } else {
       const cart = [...req.session.cart]
       const orderNumber = Math.floor(Math.random() * 10000000)
+      const order = await Order.create({orderNumber: orderNumber})
       cart.forEach(async item => {
         const orderedItem = {
-          orderNumber: orderNumber,
+          orderId: order.id,
           productId: item.product.id,
           quantity: item.quantity
         }
