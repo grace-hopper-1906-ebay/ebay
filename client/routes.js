@@ -12,8 +12,7 @@ import {
   Main,
   Cart,
   OrderConfirmation,
-  ErrorPage,
-  ErrorPageAPI
+  ErrorPage
 } from './components'
 import {me} from './store'
 
@@ -32,11 +31,14 @@ class Routes extends Component {
       <Switch>
         {/* Routes placed here are available to all visitors */}
         <Route exact path="/" component={Main} />
-        <Route path="/api" component={ErrorPageAPI} />
         <Route path="/login" component={Login} />
         <Route path="/signup" component={Signup} />
         <Route path="/products" component={AllProducts} />
-        <Route path="/single-product/:productId" component={SingleProduct} />
+        <Route
+          exact
+          path="/single-product/:productId"
+          component={SingleProduct}
+        />
         <Route path="/cart" component={Cart} />
         <Route path="/order-confirmation" component={OrderConfirmation} />
         {isLoggedIn && (

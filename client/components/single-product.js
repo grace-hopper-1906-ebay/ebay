@@ -1,8 +1,8 @@
 import React from 'react'
 import {connect} from 'react-redux'
 import {fetchSingleProduct, addProductToCart} from '../store'
-import {Row, Col} from 'react-bootstrap'
-
+import {Row, Col, Button} from 'react-bootstrap'
+import ErrorPage from './error'
 /**
  * COMPONENT
  */
@@ -16,6 +16,7 @@ class SingleProduct extends React.Component {
   }
 
   render() {
+    console.log('product', this.props.product)
     if (this.props.name) {
       return (
         <div className="body">
@@ -41,39 +42,25 @@ class SingleProduct extends React.Component {
             <Col />
           </Row>
           <Row>
-            <p>${this.props.price}</p>
+            <Col />
+            <Col>
+              <p>${this.props.price}</p>
+            </Col>
+            <Col />
           </Row>
           <Row>
-            <button type="submit" onClick={this.addToCart}>
-              Add To Cart
-            </button>
+            <Col />
+            <Col>
+              <Button type="submit" onClick={this.addToCart}>
+                Add To Cart
+              </Button>
+            </Col>
+            <Col />
           </Row>
         </div>
       )
     } else {
-      return (
-        <div className="body">
-          <Row className="error-info">
-            <Col />
-            <Col xs={10}>
-              <h1 className="centering">
-                the page requested has been erased from memory
-              </h1>
-            </Col>
-            <Col />
-          </Row>
-          <Row className="error-pic">
-            <Col />
-            <Col>
-              <img
-                id="error"
-                src="https://data.whicdn.com/images/94242698/original.gif"
-              />
-            </Col>
-            <Col />
-          </Row>
-        </div>
-      )
+      return <ErrorPage />
     }
   }
 }
@@ -90,10 +77,6 @@ const mapState = state => {
       description: state.products.product.description,
       image: state.products.product.image,
       isLoggedIn: !!state.user.id
-    }
-  } else {
-    return {
-      product: state.products.product
     }
   }
 }
