@@ -11,7 +11,8 @@ import {
   SingleProduct,
   Main,
   Cart,
-  OrderConfirmation
+  OrderConfirmation,
+  ErrorPage
 } from './components'
 import {me} from './store'
 
@@ -39,11 +40,12 @@ class Routes extends Component {
         {isLoggedIn && (
           <Switch>
             {/* Routes placed here are only available after logging in */}
-            <Route path="/home" component={UserHome} />
+            <Route path="/home/:id" component={UserHome} />
           </Switch>
         )}
-        {/* Displays our Login component as a fallback */}
-        <Route component={Login} />
+        {/* Displays our Login component as a fallback
+        <Route path = "/" component={Login} /> */}
+        <Route component={ErrorPage} />
       </Switch>
     )
   }
