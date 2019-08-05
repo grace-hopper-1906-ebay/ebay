@@ -12,6 +12,8 @@ router.get('/:id', async (req, res, next) => {
         }
       })
       res.json(orders)
+    } else {
+      res.json('You do not have access to this page')
     }
   } catch (err) {
     next(err)
