@@ -20,8 +20,8 @@ const cart = {
  * ACTION CREATORS
  */
 const gotCart = cart => ({type: GET_CART, cart})
-const deletedFromCart = cart => ({type: DELETE_FROM_CART, cart})
-const addToCart = cart => ({type: ADD_TO_CART, cart})
+const deletedFromCart = item => ({type: DELETE_FROM_CART, item})
+const addToCart = item => ({type: ADD_TO_CART, item})
 const placedOrder = payload => ({type: PLACE_ORDER, payload})
 
 /**
@@ -39,7 +39,7 @@ export const getCart = () => async dispatch => {
 
 export const deleteFromCart = id => async dispatch => {
   try {
-    const {data} = await axios.delete(`/api/cart/delete/${id.id}`)
+    const {data} = await axios.delete(`/api/cart/delete/${id}`)
     dispatch(deletedFromCart(data))
   } catch (err) {
     console.error(err)
@@ -72,9 +72,22 @@ export default function(state = cart, action) {
     case GET_CART:
       return {...state, cart: action.cart}
     case DELETE_FROM_CART:
-      return {...state, cart: action.cart}
+      let cartDel = [...state.cart]
+      const keysDel = cartDel.map(item => item.product.id)
+      const removeIndex = keysDel.indexOf(action.item.id)
+      cartDel.splice(removeIndex, 1)
+      return {...state, cart: cartDel}
     case ADD_TO_CART:
-      return {...state, cart: action.cart}
+      let cartAdd = [...state.cart]
+      const keysAdd = cartAdd.map(item => item.product.id)
+      if (keysAdd.includes(action.item.product.id)) {
+        const index = keysAdd.indexOf(action.item.product.id)
+        cartAdd[index] = action.item
+      } else {
+        cartAdd.push(action.item)
+      }
+      console.log('afteradding', cartAdd)
+      return {...state, cart: cartAdd}
     case PLACE_ORDER:
       return {
         ...state,

@@ -22,7 +22,6 @@ class Cart extends Component {
     } else {
       disablePlaceOrder = false
     }
-    console.log(disablePlaceOrder)
     return (
       <div>
         <p>Cart!!</p>
@@ -59,7 +58,7 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
   return {
     getCart: () => dispatch(getCart()),
-    deleteFromCart: id => dispatch(deleteFromCart({id: id})),
+    deleteFromCart: id => dispatch(deleteFromCart(id)),
     placeOrder: () => dispatch(placeOrder())
   }
 }
