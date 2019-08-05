@@ -40,7 +40,7 @@ class UserHome extends React.Component {
 const mapState = state => {
   return {
     user: state.user,
-    orderHistory: state.orderHistory.orderHistory
+    orderHistory: state.cart.orderHistory
   }
 }
 

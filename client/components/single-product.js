@@ -75,18 +75,18 @@ class SingleProduct extends React.Component {
  * CONTAINER
  */
 const mapState = state => {
-  if (state.singleProduct.product) {
+  if (state.products.product) {
     return {
-      product: state.singleProduct.product,
-      name: state.singleProduct.product.name,
-      price: state.singleProduct.product.price,
-      description: state.singleProduct.product.description,
-      image: state.singleProduct.product.image,
+      product: state.products.product,
+      name: state.products.product.name,
+      price: state.products.product.price,
+      description: state.products.product.description,
+      image: state.products.product.image,
       isLoggedIn: !!state.user.id
     }
   } else {
     return {
-      product: state.singleProduct.product
+      product: state.products.product
     }
   }
 }
