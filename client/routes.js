@@ -12,7 +12,8 @@ import {
   Main,
   Cart,
   OrderConfirmation,
-  ErrorPage
+  ErrorPage,
+  ErrorPageAPI
 } from './components'
 import {me} from './store'
 
@@ -25,12 +26,13 @@ class Routes extends Component {
   }
 
   render() {
-    const {isLoggedIn, isAdmin} = this.props
+    const {isLoggedIn} = this.props
 
     return (
       <Switch>
         {/* Routes placed here are available to all visitors */}
         <Route exact path="/" component={Main} />
+        <Route path="/api" component={ErrorPageAPI} />
         <Route path="/login" component={Login} />
         <Route path="/signup" component={Signup} />
         <Route path="/products" component={AllProducts} />
@@ -43,8 +45,6 @@ class Routes extends Component {
             <Route path="/home/:id" component={UserHome} />
           </Switch>
         )}
-        {/* Displays our Login component as a fallback
-        <Route path = "/" component={Login} /> */}
         <Route component={ErrorPage} />
       </Switch>
     )
@@ -58,8 +58,8 @@ const mapState = state => {
   return {
     // Being 'logged in' for our purposes will be defined has having a state.user that has a truthy id.
     // Otherwise, state.user will be an empty object, and state.user.id will be falsey
-    isLoggedIn: !!state.user.id,
-    idAdmin: state.user.admin
+    isLoggedIn: !!state.user.id
+    // idAdmin: state.user.admin
   }
 }
 
