@@ -5,7 +5,7 @@ module.exports = router
 router.get('/', async (req, res, next) => {
   try {
     const products = await Product.findAll()
-    if (req.user) {
+    if (req.user.admin) {
       res.json(products)
     } else {
       res.send('You do not have access to this page')

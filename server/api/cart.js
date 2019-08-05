@@ -6,15 +6,19 @@ module.exports = router
 router.get('/', async (req, res, next) => {
   try {
     const user = req.session.passport ? req.session.passport.user : undefined
+    let cart
     if (user) {
-      const cart = await Cart.findAll({
+      cart = await Cart.findAll({
         include: [Product],
         where: {userId: user, orderId: null}
       })
+    } else {
+      cart = [...req.session.cart]
+    }
+    if (req.user.admin) {
       res.json(cart)
     } else {
-      let cart = [...req.session.cart]
-      res.json(cart)
+      res.send('You do not have access to this page')
     }
   } catch (error) {
     next(error)
