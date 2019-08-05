@@ -5,7 +5,8 @@ const Sequelize = require('sequelize')
 
 router.get('/:id', async (req, res, next) => {
   try {
-    if (parseInt(req.params.id) === req.session.passport.user) {
+    const user = req.session.passport ? req.session.passport.user : undefined
+    if (user && parseInt(req.params.id) === req.session.passport.user) {
       const orders = await Order.findAll({
         where: {
           userId: parseInt(req.params.id)
