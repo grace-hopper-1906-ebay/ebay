@@ -1,7 +1,7 @@
 import React from 'react'
 import {Row, Col} from 'react-bootstrap'
 
-const ErrorPageAPI = () => {
+const ErrorPage = () => {
   return (
     <div className="body" id="api-error-background">
       <Row>
@@ -20,4 +20,4 @@ const ErrorPageAPI = () => {
   )
 }
 
-export default ErrorPageAPI
+export default ErrorPage
