@@ -1,6 +1,7 @@
 import React from 'react'
 import {connect} from 'react-redux'
 import {fetchSingleProduct, addProductToCart} from '../store'
+import {Row, Col} from 'react-bootstrap'
 
 /**
  * COMPONENT
@@ -15,19 +16,58 @@ class SingleProduct extends React.Component {
   }
 
   render() {
-    return (
-      <div>
+    console.log('product: ', this.props.product)
+    if (this.props.name) {
+      return (
         <div>
-          <img src={this.props.image} />
+          <Row>
+            <Col />
+            <Col>
+              <img src={this.props.image} />
+            </Col>
+            <Col />
+          </Row>
+          <Row>
+            <h3>{this.props.name}</h3>
+          </Row>
+          <Row>
+            <p>{this.props.description}</p>
+          </Row>
+          <Row>
+            <p>${this.props.price}</p>
+          </Row>
+          <Row>
+            <button type="submit" onClick={this.addToCart}>
+              Add To Cart
+            </button>
+          </Row>
         </div>
-        <div>
-          <h3>{this.props.name}</h3>
-          <p>{this.props.description}</p>
-          <p>${this.props.price}</p>
-          <button onClick={this.addToCart}>Add To Cart</button>
+      )
+    } else {
+      return (
+        <div className="body">
+          <Row className="error-info">
+            <Col />
+            <Col xs={10}>
+              <h1 className="centering">
+                the page requested has been erased from memory
+              </h1>
+            </Col>
+            <Col />
+          </Row>
+          <Row className="error-pic">
+            <Col />
+            <Col>
+              <img
+                id="error"
+                src="https://data.whicdn.com/images/94242698/original.gif"
+              />
+            </Col>
+            <Col />
+          </Row>
         </div>
-      </div>
-    )
+      )
+    }
   }
 }
 
@@ -35,12 +75,19 @@ class SingleProduct extends React.Component {
  * CONTAINER
  */
 const mapState = state => {
-  return {
-    name: state.singleProduct.product.name,
-    price: state.singleProduct.product.price,
-    description: state.singleProduct.product.description,
-    image: state.singleProduct.product.image,
-    isLoggedIn: !!state.user.id
+  if (state.singleProduct.product) {
+    return {
+      product: state.singleProduct.product,
+      name: state.singleProduct.product.name,
+      price: state.singleProduct.product.price,
+      description: state.singleProduct.product.description,
+      image: state.singleProduct.product.image,
+      isLoggedIn: !!state.user.id
+    }
+  } else {
+    return {
+      product: state.singleProduct.product
+    }
   }
 }
 
