@@ -5,7 +5,11 @@ module.exports = router
 router.get('/', async (req, res, next) => {
   try {
     const products = await Product.findAll()
-    res.json(products)
+    if (req.user) {
+      res.json(products)
+    } else {
+      res.send('You do not have access to this page')
+    }
   } catch (error) {
     next(error)
   }

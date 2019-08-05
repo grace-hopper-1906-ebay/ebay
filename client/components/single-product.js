@@ -16,22 +16,29 @@ class SingleProduct extends React.Component {
   }
 
   render() {
-    console.log('product: ', this.props.product)
     if (this.props.name) {
       return (
-        <div>
+        <div className="body">
           <Row>
             <Col />
             <Col>
-              <img src={this.props.image} />
+              <img className="product-image" src={this.props.image} />
             </Col>
             <Col />
           </Row>
           <Row>
-            <h3>{this.props.name}</h3>
+            <Col />
+            <Col>
+              <h3>{this.props.name}</h3>
+            </Col>
+            <Col />
           </Row>
           <Row>
-            <p>{this.props.description}</p>
+            <Col />
+            <Col>
+              <p>{this.props.description}</p>
+            </Col>
+            <Col />
           </Row>
           <Row>
             <p>${this.props.price}</p>
