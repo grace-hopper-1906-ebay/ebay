@@ -5,7 +5,7 @@ import {Link} from 'react-router-dom'
 import {logout} from '../store'
 import {Navbar, Nav} from 'react-bootstrap'
 
-const Navigation = ({handleClick, isLoggedIn}) => (
+const Navigation = ({handleClick, isLoggedIn, isAdmin}) => (
   <Navbar collapseOnSelect expand="lg" static="top" bg="fire">
     <Navbar.Brand>
       <Link to="/">Helios Wands</Link>
@@ -35,6 +35,12 @@ const Navigation = ({handleClick, isLoggedIn}) => (
               <Link to="/signup">Sign Up</Link>
             </ul>
           )}
+          {/* for admin access only */}
+          {isAdmin ? (
+            <ul className="nav navbar-nav">isadmin!</ul>
+          ) : (
+            <ul className="nav navbar-nav">notadmin!!</ul>
+          )}
         </Navbar.Text>
       </Nav>
     </Navbar.Collapse>
@@ -46,7 +52,8 @@ const Navigation = ({handleClick, isLoggedIn}) => (
  */
 const mapState = state => {
   return {
-    isLoggedIn: !!state.user.id
+    isLoggedIn: !!state.user.id,
+    isAdmin: state.user.admin
   }
 }
 
