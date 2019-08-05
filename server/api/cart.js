@@ -6,16 +6,16 @@ module.exports = router
 router.get('/', async (req, res, next) => {
   try {
     const user = req.session.passport ? req.session.passport.user : undefined
+    let cart
     if (user) {
-      const cart = await Cart.findAll({
+      cart = await Cart.findAll({
         include: [Product],
         where: {userId: user, orderId: null}
       })
-      res.json(cart)
     } else {
-      let cart = [...req.session.cart]
-      res.json(cart)
+      cart = [...req.session.cart]
     }
+    res.json(cart)
   } catch (error) {
     next(error)
   }

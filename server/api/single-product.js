@@ -5,11 +5,7 @@ module.exports = router
 router.get('/:id', async (req, res, next) => {
   try {
     const product = await Product.findByPk(req.params.id)
-    if (req.user.admin) {
-      res.json(product)
-    } else {
-      res.send('You do not have access to this page')
-    }
+    res.json(product)
   } catch (err) {
     next(err)
   }
