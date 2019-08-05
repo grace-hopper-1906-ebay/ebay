@@ -13,7 +13,7 @@ describe('All products route', () => {
 
   describe('/api/products/', () => {
     const fakeWandName = 'Vine Wand'
-    const fakeWandPrice = 5.5
+    const fakeWandPrice = '60.00'
 
     beforeEach(() => {
       return Product.create({
