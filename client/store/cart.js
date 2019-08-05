@@ -7,13 +7,15 @@ const GET_CART = 'GET_CART'
 const DELETE_FROM_CART = 'DELETE_FROM_CART'
 const ADD_TO_CART = 'ADD_TO_CART'
 const PLACE_ORDER = 'PLACE_ORDER'
+const GET_ORDER_HISTORY = 'GET_ORDER_HISTORY'
 
 /**
  * INITIAL STATE
  */
 const cart = {
   cart: [],
-  orderNumber: null
+  orderNumber: null,
+  orderHistory: []
 }
 
 /**
@@ -23,6 +25,10 @@ const gotCart = cart => ({type: GET_CART, cart})
 const deletedFromCart = item => ({type: DELETE_FROM_CART, item})
 const addToCart = item => ({type: ADD_TO_CART, item})
 const placedOrder = payload => ({type: PLACE_ORDER, payload})
+const getOrderHistory = orderHistory => ({
+  type: GET_ORDER_HISTORY,
+  orderHistory
+})
 
 /**
  * THUNK CREATORS
@@ -64,6 +70,15 @@ export const placeOrder = () => async dispatch => {
   }
 }
 
+export const fetchOrderHistory = userId => async dispatch => {
+  try {
+    const {data} = await axios.get(`/api/order-history/${userId}`)
+    dispatch(getOrderHistory(data))
+  } catch (err) {
+    console.error(err)
+  }
+}
+
 /**
  * REDUCER
  */
@@ -93,6 +108,11 @@ export default function(state = cart, action) {
         ...state,
         cart: action.payload.cart,
         orderNumber: action.payload.orderNumber
+      }
+    case GET_ORDER_HISTORY:
+      return {
+        ...state,
+        orderHistory: action.orderHistory
       }
     default:
       return state

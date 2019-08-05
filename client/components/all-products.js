@@ -10,6 +10,7 @@ class AllProducts extends Component {
   }
 
   render() {
+    console.log(this.props)
     const products = this.props.products
     return (
       <div>
@@ -33,7 +34,7 @@ class AllProducts extends Component {
 
 const mapStateToProps = state => {
   return {
-    products: state.allProducts.products
+    products: state.products.products
   }
 }
 
