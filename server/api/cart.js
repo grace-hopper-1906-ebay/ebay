@@ -15,11 +15,7 @@ router.get('/', async (req, res, next) => {
     } else {
       cart = [...req.session.cart]
     }
-    if (req.user.admin) {
-      res.json(cart)
-    } else {
-      res.send('You do not have access to this page')
-    }
+    res.json(cart)
   } catch (error) {
     next(error)
   }

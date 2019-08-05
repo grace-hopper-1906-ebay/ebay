@@ -11,11 +11,7 @@ router.get('/:id', async (req, res, next) => {
           userId: parseInt(req.params.id)
         }
       })
-      if (req.user.admin) {
-        res.json(orders)
-      } else {
-        res.send('You do not have access to this page')
-      }
+      res.json(orders)
     }
   } catch (err) {
     next(err)
