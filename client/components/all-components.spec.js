@@ -5,6 +5,7 @@ import React from 'react'
 import {Provider} from 'react-redux'
 import {mount} from 'enzyme'
 import AllProducts from './all-products'
+import SingleProduct from './single-product'
 import configureMockStore from 'redux-mock-store'
 import thunk from 'redux-thunk'
 const {JSDOM} = require('jsdom')
@@ -56,24 +57,23 @@ describe('<AllProducts /> component', () => {
   })
 })
 
-/*   beforeEach('Create component', () => {
-    allProducts = shallow(
-      <AllProducts/>
-      // <AllProducts
-      //   products={{
-      //     id: 1,
-      //     name: 'Super Wand',
-      //     price: 100.00,
-      //     desciption: "Superman's wand",
-      //     image: 'https://bit.ly/2K33xM8'
-      //   }}
-      // />
+describe('<SingleProduct /> component', () => {
+  let product = {
+    name: 'wand',
+    price: 5.0
+  }
+
+  const mockStore = configureMockStore(middlewares)
+
+  xit('renders a single product', () => {
+    const store = mockStore({products: {product: product}})
+    const wrapper = mount(
+      <Provider store={store}>
+        <Router history={history}>
+          <SingleProduct />
+        </Router>
+      </Provider>
     )
+    expect(wrapper.exists('.color')).to.be.equal(true)
   })
-  //  spec does not see AllProducts component this is why the specs don't pass
-  xit('should exist', function() {
-    assert.isDefined(AllProducts)
-  })
-  xit('finds name of the product', () => {
-    expect(allProducts.find({products: name}).text()).to.be.equal('Super Wand')
-  }) */
+})
