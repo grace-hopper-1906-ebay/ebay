@@ -35,6 +35,11 @@ router.delete('/delete/:id', async (req, res, next) => {
       })
       res.json({id: parseInt(req.params.id)})
     } else {
+      let cart = [...req.session.cart]
+      const filtered = cart.filter(
+        item => item.product.id !== parseInt(req.params.id)
+      )
+      req.session.cart = filtered
       res.json({id: parseInt(req.params.id)})
     }
   } catch (err) {
@@ -96,14 +101,14 @@ router.post('/add', async (req, res, next) => {
         if (cart[i].product.id === parseInt(req.body.id)) {
           cart[i].quantity++
           req.session.cart = cart
-          res.json(req.session.cart)
+          res.json(req.session.cart[i])
           return
         }
       }
       const product = await Product.findByPk(req.body.id)
       cart.push({quantity: 1, product: product})
       req.session.cart = cart
-      res.json(req.session.cart)
+      res.json(req.session.cart[req.session.cart.length - 1])
     }
   } catch (err) {
     console.log('error')
@@ -116,8 +121,22 @@ router.put('/place-order', async (req, res, next) => {
   try {
     const user = req.session.passport ? req.session.passport.user : undefined
     if (user) {
+      const cart = await Cart.findAll({
+        include: [Product],
+        where: {userId: user, orderId: null}
+      })
+      const total = cart
+        .map(item => Number(item.product.price * item.quantity))
+        .reduce((acc, cur) => {
+          return acc + cur
+        }, 0)
+
       const orderNumber = Math.floor(user * Math.random() * 10000000)
-      const order = await Order.create({orderNumber: orderNumber, userId: user})
+      const order = await Order.create({
+        orderNumber: orderNumber,
+        userId: user,
+        totalPrice: total
+      })
       await Cart.update(
         {orderId: order.id},
         {where: {userId: user, orderId: null}}
@@ -125,8 +144,16 @@ router.put('/place-order', async (req, res, next) => {
       res.json({cart: [], orderNumber})
     } else {
       const cart = [...req.session.cart]
+      const total = cart
+        .map(item => Number(item.product.price * item.quantity))
+        .reduce((acc, cur) => {
+          return acc + cur
+        }, 0)
       const orderNumber = Math.floor(Math.random() * 10000000)
-      const order = await Order.create({orderNumber: orderNumber})
+      const order = await Order.create({
+        orderNumber: orderNumber,
+        totalPrice: total
+      })
       cart.forEach(async item => {
         const orderedItem = {
           orderId: order.id,
