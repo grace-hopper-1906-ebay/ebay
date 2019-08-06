@@ -3,6 +3,7 @@ import {connect} from 'react-redux'
 import {fetchSingleProduct, addProductToCart} from '../store'
 import {Row, Col, Button} from 'react-bootstrap'
 import ErrorPage from './error'
+import {Link} from 'react-router-dom'
 /**
  * COMPONENT
  */
@@ -16,46 +17,42 @@ class SingleProduct extends React.Component {
   }
 
   render() {
-    console.log('product', this.props.product)
     if (this.props.name) {
       return (
         <div className="body">
           <Row>
-            <Col />
-            <Col>
+            <Col sm={{span: 4, offset: 4}}>
               <img className="product-image" src={this.props.image} />
             </Col>
-            <Col />
           </Row>
           <Row>
-            <Col />
-            <Col>
-              <h3>{this.props.name}</h3>
+            <Col sm={{span: 4, offset: 4}}>
+              <h3 className="color">{this.props.name}</h3>
             </Col>
-            <Col />
           </Row>
           <Row>
-            <Col />
-            <Col>
-              <p>{this.props.description}</p>
+            <Col sm={{span: 7, offset: 4}}>
+              <p className="color">{this.props.description}</p>
             </Col>
-            <Col />
           </Row>
           <Row>
-            <Col />
-            <Col>
-              <p>${this.props.price}</p>
+            <Col sm={{span: 4, offset: 4}}>
+              <p className="color">${this.props.price}</p>
             </Col>
-            <Col />
           </Row>
           <Row>
-            <Col />
-            <Col>
+            <Col sm={{span: 4, offset: 4}}>
               <Button type="submit" onClick={this.addToCart}>
                 Add To Cart
               </Button>
             </Col>
-            <Col />
+          </Row>
+          <Row>
+            <Col sm={{span: 4, offset: 1}}>
+              <Link className="link" to="/products">
+                Back to Wands
+              </Link>
+            </Col>
           </Row>
         </div>
       )

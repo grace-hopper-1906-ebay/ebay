@@ -17,26 +17,24 @@ class Navigation extends React.Component {
             Helios Wands
           </Link>
         </Navbar.Brand>
-        {/* <Navbar.Toggle aria-controls="responsive-navbar-nav" /> */}
+        <Navbar.Toggle aria-controls="responsive-navbar-nav" />
         <Navbar.Collapse
           id="responsive-navbar-nav"
           className="justify-content-end"
         >
-          <Nav className="justify-content-end">
-            <Navbar.Text>
-              <Link className="color link" to="/cart">
-                Cart
-              </Link>
-            </Navbar.Text>
-            <Navbar.Text>
+          <Nav>
+            {/* <Nav.Link>
               <Link className="color link" to="/products">
                 Wands
               </Link>
-            </Navbar.Text>
-            <Navbar.Text>
+            </Nav.Link> */}
+            <Nav.Link>
               {this.props.isLoggedIn ? (
                 <ul className="nav navbar-nav">
                   {/* The navbar will show these links after you log in */}
+                  <Link className="color link" to="/products">
+                    Wands
+                  </Link>
                   <Link
                     className="color link"
                     to={this.userLink(this.props.user.id)}
@@ -46,25 +44,33 @@ class Navigation extends React.Component {
                   <a href="#" onClick={this.props.handleClick}>
                     Logout
                   </a>
+                  <Link className="color link" to="/cart">
+                    Cart
+                  </Link>
                 </ul>
               ) : (
                 <ul className="nav navbar-nav">
                   {/* The navbar will show these links before you log in */}
+                  <Link className="color link" to="/products">
+                    Wands
+                  </Link>
                   <Link to="/login" className="color link">
                     Login
                   </Link>
                   <Link to="/signup" className="color link">
                     Sign Up
                   </Link>
+                  <Link className="color link" to="/cart">
+                    Cart
+                  </Link>
                 </ul>
               )}
-              {/* for admin access only */}
-              {this.props.isAdmin ? (
-                <ul className="nav navbar-nav">isadmin!</ul>
-              ) : (
-                <ul className="nav navbar-nav">notadmin!!</ul>
-              )}
-            </Navbar.Text>
+            </Nav.Link>
+            {/* <Nav.Link>
+              <Link className="color link" to="/cart">
+                Cart
+              </Link>
+            </Nav.Link> */}
           </Nav>
         </Navbar.Collapse>
       </Navbar>
