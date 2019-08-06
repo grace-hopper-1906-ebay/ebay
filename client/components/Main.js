@@ -4,9 +4,9 @@ import {Carousel, Row, Col} from 'react-bootstrap'
 
 const Main = () => {
   return (
-    <Row>
+    <Row className="center">
       <Col sm={{span: 12}}>
-        <Carousel centered className="body">
+        <Carousel className="body">
           <Carousel.Item>
             <img src="https://i.imgur.com/6lu9uZp.png" />
           </Carousel.Item>
