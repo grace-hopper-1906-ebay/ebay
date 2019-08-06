@@ -73,7 +73,7 @@ form div {
 .product-image {
   height: 300px;
   width: 300px;
-  border: solid #242465;
+  border: 7px solid #242465;
 }
 
 #api-error-background {
@@ -98,7 +98,7 @@ form div {
   color: #856de2;
 }
 
-a {
+.link {
   color: #856de2;
 }
 

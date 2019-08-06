@@ -2,6 +2,8 @@ import React from 'react'
 import {connect} from 'react-redux'
 import PropTypes from 'prop-types'
 import {auth} from '../store'
+import {Row, Col} from 'react-bootstrap'
+import {Link} from 'react-router-dom'
 
 /**
  * COMPONENT
@@ -11,25 +13,35 @@ const AuthForm = props => {
 
   return (
     <div className="body">
-      <form onSubmit={handleSubmit} name={name}>
-        <div>
-          <label htmlFor="email">
-            <small>Email</small>
-          </label>
-          <input name="email" type="text" />
-        </div>
-        <div>
-          <label htmlFor="password">
-            <small>Password</small>
-          </label>
-          <input name="password" type="password" />
-        </div>
-        <div>
-          <button type="submit">{displayName}</button>
-        </div>
-        {error && error.response && <div> {error.response.data} </div>}
-      </form>
-      <a href="/auth/google">{displayName} with Google</a>
+      <Row>
+        <Col sm={{span: 8, offset: 3}}>
+          <form onSubmit={handleSubmit} name={name}>
+            <div>
+              <label htmlFor="email">
+                <small className="color">Email</small>
+              </label>
+              <input name="email" type="text" />
+            </div>
+            <div>
+              <label htmlFor="password">
+                <small className="color">Password</small>
+              </label>
+              <input name="password" type="password" />
+            </div>
+            <div>
+              <button type="submit">{displayName}</button>
+            </div>
+            {error && error.response && <div> {error.response.data} </div>}
+          </form>
+        </Col>
+      </Row>
+      <Row>
+        <Col sm={{span: 4, offset: 2}}>
+          <Link className="color link" to="/auth/google">
+            {displayName} with Google
+          </Link>
+        </Col>
+      </Row>
     </div>
   )
 }

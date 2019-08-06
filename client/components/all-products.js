@@ -10,19 +10,24 @@ class AllProducts extends Component {
   }
 
   render() {
-    console.log(this.props)
     const products = this.props.products
     return (
       <div className="body">
         <Row>
-          <Col>Wands</Col>
+          <Col sm={{span: 4, offset: 5}} className="color">
+            <h1>Wands</h1>
+          </Col>
         </Row>
         <Row className="product-rows">
           {products.map(product => (
             <Col sm={4} key={product.id} className="product-rows">
               <img className="all-products-images" src={product.image} />
-              <Link to={`single-product/${product.id}`} key={product.id}>
-                {' '}
+              <Link
+                className="link"
+                to={`single-product/${product.id}`}
+                key={product.id}
+              >
+                {'    '}
                 {product.name}
               </Link>
             </Col>
