@@ -38,7 +38,7 @@ const AuthForm = props => {
       <Row>
         <Col sm={{span: 4, offset: 2}}>
           <Link className="color link" to="/auth/google">
-            {displayName} with Google
+            <img src="https://i.imgur.com/LTMiQWz.png" />
           </Link>
         </Col>
       </Row>
