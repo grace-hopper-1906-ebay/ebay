@@ -101,7 +101,6 @@ export default function(state = cart, action) {
       } else {
         cartAdd.push(action.item)
       }
-      console.log('afteradding', cartAdd)
       return {...state, cart: cartAdd}
     case PLACE_ORDER:
       return {

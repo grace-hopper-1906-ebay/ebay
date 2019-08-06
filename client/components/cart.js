@@ -17,6 +17,11 @@ class Cart extends Component {
 
   render() {
     const cart = this.props.cart
+    const total = cart
+      .map(item => Number(item.product.price * item.quantity))
+      .reduce((acc, cur) => {
+        return acc + cur
+      }, 0)
     let disablePlaceOrder
     if (cart.length === 0) {
       disablePlaceOrder = true
@@ -55,6 +60,7 @@ class Cart extends Component {
             </Row>
           </div>
         ))}
+        <p>Order Total: ${total}</p>
         <Col />
         <Button
           disabled={disablePlaceOrder}

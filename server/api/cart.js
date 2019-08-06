@@ -35,6 +35,11 @@ router.delete('/delete/:id', async (req, res, next) => {
       })
       res.json({id: parseInt(req.params.id)})
     } else {
+      let cart = [...req.session.cart]
+      const filtered = cart.filter(
+        item => item.product.id !== parseInt(req.params.id)
+      )
+      req.session.cart = filtered
       res.json({id: parseInt(req.params.id)})
     }
   } catch (err) {
@@ -96,14 +101,14 @@ router.post('/add', async (req, res, next) => {
         if (cart[i].product.id === parseInt(req.body.id)) {
           cart[i].quantity++
           req.session.cart = cart
-          res.json(req.session.cart)
+          res.json(req.session.cart[i])
           return
         }
       }
       const product = await Product.findByPk(req.body.id)
       cart.push({quantity: 1, product: product})
       req.session.cart = cart
-      res.json(req.session.cart)
+      res.json(req.session.cart[req.session.cart.length - 1])
     }
   } catch (err) {
     console.log('error')
