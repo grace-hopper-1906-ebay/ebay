@@ -121,8 +121,22 @@ router.put('/place-order', async (req, res, next) => {
   try {
     const user = req.session.passport ? req.session.passport.user : undefined
     if (user) {
+      const cart = await Cart.findAll({
+        include: [Product],
+        where: {userId: user, orderId: null}
+      })
+      const total = cart
+        .map(item => Number(item.product.price * item.quantity))
+        .reduce((acc, cur) => {
+          return acc + cur
+        }, 0)
+
       const orderNumber = Math.floor(user * Math.random() * 10000000)
-      const order = await Order.create({orderNumber: orderNumber, userId: user})
+      const order = await Order.create({
+        orderNumber: orderNumber,
+        userId: user,
+        totalPrice: total
+      })
       await Cart.update(
         {orderId: order.id},
         {where: {userId: user, orderId: null}}
@@ -130,8 +144,16 @@ router.put('/place-order', async (req, res, next) => {
       res.json({cart: [], orderNumber})
     } else {
       const cart = [...req.session.cart]
+      const total = cart
+        .map(item => Number(item.product.price * item.quantity))
+        .reduce((acc, cur) => {
+          return acc + cur
+        }, 0)
       const orderNumber = Math.floor(Math.random() * 10000000)
-      const order = await Order.create({orderNumber: orderNumber})
+      const order = await Order.create({
+        orderNumber: orderNumber,
+        totalPrice: total
+      })
       cart.forEach(async item => {
         const orderedItem = {
           orderId: order.id,
