@@ -17,8 +17,13 @@ class SingleProduct extends React.Component {
     return alert(`${this.props.name} has been added to your cart`)
   }
 
+  splitDescription = description => {
+    return description.split('\n')
+  }
+
   render() {
     if (this.props.name) {
+      const description = this.splitDescription(this.props.description)
       return (
         <div className="body">
           <Row>
@@ -33,7 +38,11 @@ class SingleProduct extends React.Component {
           </Row>
           <Row>
             <Col sm={{span: 7, offset: 4}}>
-              <p className="color">{this.props.description}</p>
+              {description.map((row, index) => (
+                <p key={index} className="color">
+                  {row}
+                </p>
+              ))}
             </Col>
           </Row>
           <Row>
