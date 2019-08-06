@@ -30,44 +30,39 @@ class Cart extends Component {
     }
     return (
       <div className="body">
-        <Row>
-          <Col />
-          <Col>
-            <h3 className="color">Cart!!</h3>
+        <Row className="center">
+          <Col sm={4} className="center">
+            <h3 className="color center">Cart</h3>
           </Col>
-          <Col />
         </Row>
-        {cart.map((item, index) => (
-          <div key={index}>
-            <Row>
-              <img src={item.product.image} />
-            </Row>
-            <Row>
-              <p className="color">{item.product.name}</p>
-            </Row>
-            <Row>
-              <p className="color">{item.product.price}</p>
-            </Row>
-            <Row>
+        <Row className="center">
+          {cart.map((item, index) => (
+            <Col key={index} sm={4}>
+              <img className="center" src={item.product.image} />
+              <p className="color center">{item.product.name}</p>
+              <p className="color center">{item.product.price}</p>
               <p className="color">quantity: {item.quantity}</p>
-            </Row>
-            <Row>
               <Button
                 onClick={() => this.props.deleteFromCart(item.product.id)}
               >
                 Delete from cart
               </Button>
-            </Row>
-          </div>
-        ))}
-        <p>Order Total: ${total}</p>
-        <Col />
-        <Button
-          disabled={disablePlaceOrder}
-          onClick={this.handleOrderPlacement}
-        >
-          Place Order!!
-        </Button>
+            </Col>
+          ))}
+        </Row>
+        <Row>
+          <Col sm={{span: 4, offset: 5}}>
+            <h4 className="color">Order Total: ${total}</h4>
+          </Col>
+        </Row>
+        <div className="center">
+          <Button
+            disabled={disablePlaceOrder}
+            onClick={this.handleOrderPlacement}
+          >
+            Place Order
+          </Button>
+        </div>
       </div>
     )
   }

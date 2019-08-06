@@ -11,9 +11,9 @@ class Navigation extends React.Component {
   }
   render() {
     return (
-      <Navbar collapseOnSelect expand="lg" static="top" bg="fire">
+      <Navbar id="navbar" collapseOnSelect expand="lg" sticky="top" bg="fire">
         <Navbar.Brand>
-          <Link to="/" className="color link">
+          <Link to="/" className="color link brand">
             Helios Wands
           </Link>
         </Navbar.Brand>
@@ -23,11 +23,6 @@ class Navigation extends React.Component {
           className="justify-content-end"
         >
           <Nav>
-            {/* <Nav.Link>
-              <Link className="color link" to="/products">
-                Wands
-              </Link>
-            </Nav.Link> */}
             <Nav.Link>
               {this.props.isLoggedIn ? (
                 <ul className="nav navbar-nav">
@@ -41,7 +36,11 @@ class Navigation extends React.Component {
                   >
                     Profile
                   </Link>
-                  <a href="#" onClick={this.props.handleClick}>
+                  <a
+                    className="color link"
+                    href="#"
+                    onClick={this.props.handleClick}
+                  >
                     Logout
                   </a>
                   <Link className="color link" to="/cart">
@@ -66,11 +65,6 @@ class Navigation extends React.Component {
                 </ul>
               )}
             </Nav.Link>
-            {/* <Nav.Link>
-              <Link className="color link" to="/cart">
-                Cart
-              </Link>
-            </Nav.Link> */}
           </Nav>
         </Navbar.Collapse>
       </Navbar>
