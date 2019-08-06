@@ -1,14 +1,25 @@
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
 import {Link} from 'react-router-dom'
+import {Row, Col} from 'react-bootstrap'
 
 class orderConfirmation extends Component {
   componentDidMount() {}
   render() {
     return (
       <div className="body">
-        <h3>Order Placed!!</h3>
-        <p>Order Number: {this.props.orderNumber}</p>
+        <Row>
+          <Col sm={4} className="margins">
+            <h3 className="center color">Order Placed</h3>
+          </Col>
+        </Row>
+        <Row>
+          <Col>
+            <p className="color center">
+              Order Number: {this.props.orderNumber}
+            </p>
+          </Col>
+        </Row>
       </div>
     )
   }
