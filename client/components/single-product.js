@@ -14,6 +14,7 @@ class SingleProduct extends React.Component {
 
   addToCart = () => {
     this.props.addProductToCart({id: this.props.match.params.productId})
+    return alert(`${this.props.name} has been added to your cart`)
   }
 
   render() {
