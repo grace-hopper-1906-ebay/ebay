@@ -6,7 +6,7 @@ class orderConfirmation extends Component {
   componentDidMount() {}
   render() {
     return (
-      <div>
+      <div className="body">
         <h3>Order Placed!!</h3>
         <p>Order Number: {this.props.orderNumber}</p>
       </div>

@@ -13,22 +13,36 @@ class Navigation extends React.Component {
     return (
       <Navbar collapseOnSelect expand="lg" static="top" bg="fire">
         <Navbar.Brand>
-          <Link to="/">Helios Wands</Link>
+          <Link to="/" className="color link">
+            Helios Wands
+          </Link>
         </Navbar.Brand>
         {/* <Navbar.Toggle aria-controls="responsive-navbar-nav" /> */}
-        <Navbar.Collapse id="responsive-navbar-nav">
-          <Nav>
+        <Navbar.Collapse
+          id="responsive-navbar-nav"
+          className="justify-content-end"
+        >
+          <Nav className="justify-content-end">
             <Navbar.Text>
-              <Link to="/cart">Cart</Link>
+              <Link className="color link" to="/cart">
+                Cart
+              </Link>
             </Navbar.Text>
             <Navbar.Text>
-              <Link to="/products">Wands</Link>
+              <Link className="color link" to="/products">
+                Wands
+              </Link>
             </Navbar.Text>
             <Navbar.Text>
               {this.props.isLoggedIn ? (
                 <ul className="nav navbar-nav">
                   {/* The navbar will show these links after you log in */}
-                  <Link to={this.userLink(this.props.user.id)}>Profile</Link>
+                  <Link
+                    className="color link"
+                    to={this.userLink(this.props.user.id)}
+                  >
+                    Profile
+                  </Link>
                   <a href="#" onClick={this.props.handleClick}>
                     Logout
                   </a>
@@ -36,8 +50,12 @@ class Navigation extends React.Component {
               ) : (
                 <ul className="nav navbar-nav">
                   {/* The navbar will show these links before you log in */}
-                  <Link to="/login">Login</Link>
-                  <Link to="/signup">Sign Up</Link>
+                  <Link to="/login" className="color link">
+                    Login
+                  </Link>
+                  <Link to="/signup" className="color link">
+                    Sign Up
+                  </Link>
                 </ul>
               )}
               {/* for admin access only */}

@@ -32,14 +32,14 @@ form div {
   margin-bottom: 0;
   bottom: 0;
   width: 100%;
-  background-color: #e49f57;
+  background-color: #231c65;
   display: flex;
   justify-content: space-around;
 }
 
 #footer p {
   text-align: left;
-  color: white;
+  color: #856de2;
   padding: 15px;
 }
 
@@ -53,16 +53,16 @@ form div {
 }
 
 .bg-fire {
-  background-color: #c88c7e;
+  background-color: #231c65;
 }
 
 .body {
   height: 100vh;
-  /* width: 100vw; */
+  margin: 0;
   display: flex;
   flex-direction: column;
   justify-content: space-evenly;
-  background-color: #dc4f14;
+  background-color: #352d7b;
 }
 
 #error {
@@ -73,7 +73,7 @@ form div {
 .product-image {
   height: 300px;
   width: 300px;
-  text-align: center;
+  border: solid #242465;
 }
 
 #api-error-background {
@@ -81,7 +81,28 @@ form div {
 }
 
 .error-words {
-  color: #fdfefe;
-  text-shadow: 0 1px black, 0 1px black, 1px 0 black, 0 1px black;
+  color: #856de2;
+  text-shadow: 3px 0 black, 0 3px black, 3px 0 black, 0 3px black;
   font-size: 24pt;
+}
+
+.all-products-images {
+  border: solid #242465;
+}
+
+.product-rows {
+  padding: 10px, 10px;
+}
+
+.color {
+  color: #856de2;
+}
+
+a {
+  color: #856de2;
+}
+
+.link:hover {
+  color: #6d5ba9;
+  text-decoration: none;
 }

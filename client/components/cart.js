@@ -3,6 +3,7 @@ import {connect} from 'react-redux'
 import {Link} from 'react-router-dom'
 import {Redirect} from 'react-router'
 import {deleteFromCart, getCart, placeOrder} from '../store'
+import {Row, Col, Button} from 'react-bootstrap'
 
 class Cart extends Component {
   componentDidMount() {
@@ -23,26 +24,44 @@ class Cart extends Component {
       disablePlaceOrder = false
     }
     return (
-      <div>
-        <p>Cart!!</p>
-
+      <div className="body">
+        <Row>
+          <Col />
+          <Col>
+            <h3 className="color">Cart!!</h3>
+          </Col>
+          <Col />
+        </Row>
         {cart.map((item, index) => (
           <div key={index}>
-            <img src={item.product.image} />
-            <p>{item.product.name}</p>
-            <p>{item.product.price}</p>
-            <p>quantity: {item.quantity}</p>
-            <button onClick={() => this.props.deleteFromCart(item.product.id)}>
-              Delete from cart
-            </button>
+            <Row>
+              <img src={item.product.image} />
+            </Row>
+            <Row>
+              <p className="color">{item.product.name}</p>
+            </Row>
+            <Row>
+              <p className="color">{item.product.price}</p>
+            </Row>
+            <Row>
+              <p className="color">quantity: {item.quantity}</p>
+            </Row>
+            <Row>
+              <Button
+                onClick={() => this.props.deleteFromCart(item.product.id)}
+              >
+                Delete from cart
+              </Button>
+            </Row>
           </div>
         ))}
-        <button
+        <Col />
+        <Button
           disabled={disablePlaceOrder}
           onClick={this.handleOrderPlacement}
         >
           Place Order!!
-        </button>
+        </Button>
       </div>
     )
   }

@@ -15,7 +15,7 @@ class UserHome extends React.Component {
   render() {
     const {user, orderHistory} = this.props
     return (
-      <div>
+      <div className="body">
         <div>
           <h3>Welcome, {user.email}!</h3>
           <h2>Order History</h2>
