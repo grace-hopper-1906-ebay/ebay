@@ -10,7 +10,6 @@ class AllProducts extends Component {
   }
 
   render() {
-    console.log(this.props)
     const products = this.props.products
     return (
       <div className="body">
