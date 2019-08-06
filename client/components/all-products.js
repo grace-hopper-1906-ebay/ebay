@@ -12,15 +12,15 @@ class AllProducts extends Component {
   render() {
     const products = this.props.products
     return (
-      <div className="body center">
+      <div className="body">
         <Row>
-          <Col sm={4}>
+          <Col sm={4} className="margins">
             <h1 className="color center">Wands</h1>
           </Col>
         </Row>
         <Row className="product-rows">
           {products.map(product => (
-            <Col sm={4} key={product.id} className="product-rows center">
+            <Col sm={4} key={product.id} className="product-rows">
               <img className="all-products-images" src={product.image} />
               <Link
                 className="link"

@@ -14,19 +14,19 @@ const AuthForm = props => {
   return (
     <div className="body">
       <Row>
-        <Col sm={{span: 8, offset: 3}}>
-          <form onSubmit={handleSubmit} name={name}>
+        <Col sm={8} className="margins">
+          <form className="center" onSubmit={handleSubmit} name={name}>
             <div>
               <label htmlFor="email">
-                <small className="color">Email</small>
+                <small className="color" />
               </label>
-              <input name="email" type="text" />
+              <input placeholder="email" name="email" type="text" />
             </div>
             <div>
               <label htmlFor="password">
-                <small className="color">Password</small>
+                <small className="color" />
               </label>
-              <input name="password" type="password" />
+              <input name="password" placeholder="password" type="password" />
             </div>
             <div>
               <button type="submit">{displayName}</button>
@@ -36,8 +36,8 @@ const AuthForm = props => {
         </Col>
       </Row>
       <Row>
-        <Col sm={{span: 4, offset: 2}}>
-          <Link className="color link" to="/auth/google">
+        <Col sm={4} className="margins">
+          <Link className="color link center imagegoog" to="/auth/google">
             <img src="https://i.imgur.com/LTMiQWz.png" />
           </Link>
         </Col>

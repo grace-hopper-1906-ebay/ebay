@@ -16,21 +16,21 @@ class UserHome extends React.Component {
   render() {
     const {user, orderHistory} = this.props
     return (
-      <div className="cart">
+      <div className="body">
         <Row>
-          <Col sm={{span: 10, offset: 3}}>
-            <h1 className="color">Welcome, {user.email}!</h1>
+          <Col sm={10} className="margins">
+            <h1 className="color center">Welcome, {user.email}!</h1>
           </Col>
         </Row>
         <Row>
-          <Col sm={{span: 2, offset: 4}}>
-            <h2 className="color">Order History:</h2>
+          <Col sm={2} className="margins center">
+            <h2 className="color center">Order History:</h2>
             {orderHistory.length === 0 ? (
-              <p className="color">No Orders Placed!</p>
+              <p className="color center">No Orders Placed!</p>
             ) : (
-              <ul>
+              <ul className="center">
                 {orderHistory.map((order, index) => (
-                  <li key={index} className="color">
+                  <li key={index} className="color center">
                     Order: {order.orderNumber}
                   </li>
                 ))}

@@ -31,13 +31,13 @@ class Cart extends Component {
     return (
       <div className="body">
         <Row className="center">
-          <Col sm={4} className="center">
+          <Col sm={4} className="margins">
             <h3 className="color center">Cart</h3>
           </Col>
         </Row>
         <Row className="center">
           {cart.map((item, index) => (
-            <Col key={index} sm={4}>
+            <Col className="margins" key={index} sm={4}>
               <img className="center" src={item.product.image} />
               <p className="color center">{item.product.name}</p>
               <p className="color center">{item.product.price}</p>
@@ -51,8 +51,8 @@ class Cart extends Component {
           ))}
         </Row>
         <Row>
-          <Col sm={{span: 4, offset: 5}}>
-            <h4 className="color">Order Total: ${total}</h4>
+          <Col sm={4} className="margins">
+            <h4 className="color center">Order Total: ${total}</h4>
           </Col>
         </Row>
         <div className="center">
