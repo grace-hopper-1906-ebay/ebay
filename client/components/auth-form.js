@@ -37,10 +37,9 @@ const AuthForm = props => {
       </Row>
       <Row>
         <Col sm={4} className="margins">
-          {/* <a className="color link center" to="/auth/google">
+          <a className="color link center" href="/auth/google">
             <img src="https://i.imgur.com/LTMiQWz.png" />
-          </a> */}
-          <a href="/auth/google">login with google</a>
+          </a>
         </Col>
       </Row>
     </div>
